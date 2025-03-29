@@ -14,8 +14,8 @@
         echo "Não conseguiu conectar no BD ! <br>";
     }
 
-    if($connection){
-        echo"Você está conectado ao BD ! <br>";
-    }
+    // if($connection){
+    //     echo"Você está conectado ao BD ! <br>";
+    // }
 
 ?>

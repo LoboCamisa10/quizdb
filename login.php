@@ -37,7 +37,7 @@
                         if (password_verify($_SESSION["password"], $user["password"])) {
                             header("Location: question.php");
                             exit();
-                        } else { // Se a senha estiver errada
+                        } else { // Se a senha estiver err ada
                             header("Location: index.php");
                             exit();
                             echo "Senha incorreta.";
@@ -46,13 +46,13 @@
                 }
 
                 else { // Usuário não encontrado.
-                    header("Location: index.php?error=User not found");
+                    header("Location: index.php?error=Usuário não encontrado !");
                     exit();
                 }
             }
 
             else{ // Login e senha estão vazios.
-                header("Location: index.php?error=User Name and Password is required");
+                header("Location: index.php?error=Usuário e senha são necessários!");
                 exit();
             }
         }

@@ -24,7 +24,7 @@
             mysqli_query($connection, $sql);
             echo "Usuário está cadastrado. <br>";
 
-            header("Location: index.php?registered=User registered;");
+            header("Location: index.php?registered=Usuário registrado!");
             exit();
         }
 

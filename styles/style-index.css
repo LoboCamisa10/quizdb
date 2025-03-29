@@ -1,0 +1,101 @@
+body{
+    background: #1690a7;
+}
+
+.header-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 20vh; /* Adjust as needed */
+    text-align: center;
+}
+
+h1 {
+    letter-spacing: 3px;
+    margin-bottom: 1rem; /* Space between text and image */
+}
+
+img {
+    margin-top: 1rem; /* Additional spacing if needed */
+}
+
+
+.login-body{
+    /* background: #1690a7; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+}
+
+*{
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+
+h2{
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.register-forms{
+    width: 30rem;
+    border: 2px solid #ccc;
+    padding: 30px;
+    background: #fff;
+    border-radius: 15px;
+}
+
+label{
+    color: #888;
+    font-size: 18px;
+    padding: 10px;
+    letter-spacing: 1px;
+}
+
+input{
+    display: block;
+    border: 1x solid #ccc;
+    width: 95%;
+    padding: 10px;
+    margin: 10px auto;
+}
+
+button{
+    display: block; /* Change to block element */
+    margin: 20px auto 0; /* 20px top margin, auto left/right 0px bottom */
+    background: #46a877;
+    padding: 1rem 3rem;
+    color: #fff;
+    border-radius: 5px;
+    border: none;    /* ... existing styles ... */
+    cursor: pointer;
+    transition: opacity 0.450s;
+}
+
+button:hover{
+    opacity: .6;
+}
+
+#create-count-text{
+    letter-spacing: 1px;
+    color: #888;
+
+}
+
+.error{
+    background: #F2DEDE;
+    color: #A94442;
+    padding: 10px;
+    width: 95%;
+    border-radius: 5px;
+}
+
+.registered{
+    background: #b6daaf;
+    color: #528b5a;
+    padding: 10px;
+    width: 95%;
+    border-radius: 5px;
+}
