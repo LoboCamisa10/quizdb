@@ -24,7 +24,7 @@
                 $stmt = mysqli_prepare($connection, $sqlSearch);
                  //cria um objeto que previni a entrada de SQL injetado
                 mysqli_stmt_bind_param($stmt, "s",  $_SESSION["username"]); 
-                // vincula SESSION[username] a stmt e informa que é "s" de string
+                // vincula SESSION[username] a variável stmt e informa que é "s" de string
                 mysqli_stmt_execute($stmt); 
                 //Executa a pequisa no banco de dados
                 $result = mysqli_stmt_get_result($stmt);
@@ -37,8 +37,8 @@
                         if (password_verify($_SESSION["password"], $user["password"])) {
                             header("Location: question.php");
                             exit();
-                        } else { // Se a senha estiver err ada
-                            header("Location: index.php");
+                        } else { // Se a senha estiver errada
+                            header("Location: index.php?error=Senha incorreta !");
                             exit();
                             echo "Senha incorreta.";
                         }
