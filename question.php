@@ -40,7 +40,6 @@
 
                 if (mysqli_num_rows($result) > 0) { 
                     $user = mysqli_fetch_assoc($result);
-                    print_r($user);
                     $name = $user["nome"] ?? 'Usuário';
                     $age = $user["idade"] ?? '0';
                 } else {
@@ -62,7 +61,13 @@
             </div>
 
             <div class="answered-counter">
-                <div class="counter-number" id="answered-count">0</div>
+                <div class="counter-number" id="answered-count">
+                    <?php echo isset($_SESSION['current_score']) ? $_SESSION['current_score'] : 0; ?>
+                </div>
+                <div class="counter-label">Corretas</div>
+                <div class="counter-number" id="answered-count">
+                    <?php echo isset($_SESSION['current_answered']) ? $_SESSION['current_answered'] : 0; ?>
+                </div>
                 <div class="counter-label">Perguntas Respondidas</div>
             </div>
         </nav>
@@ -73,7 +78,7 @@
             Tarefas para serem feitas: <br>
             - Criar uma barra de navegação com imagem, nome, idade e as perguntas respondidas.  FEITO ✅<br>
             - Criar as abas de perguntas, e colocar duas perguntas lá, com form e radio. FEITO ✅ <br>
-            - Fazer os testes no banco de dados, como tentar armazenar as respostas e fazer a correção dessas duas perguntas. <br>
+            - Fazer os testes no banco de dados, como tentar armazenar as respostas e fazer a correção dessas duas perguntas. FEITO ✅ <br>
             - Colocar um sistema para atualizar a foto do Perfil <br>
             - Colocar as perguntas em verde ou amarelo dependendo se a pergunta estiver certa ou errada <br>
             - Colocar o botão de logout dentro da barra de navegação
@@ -81,53 +86,98 @@
                 
         <h1>VOCÊ ESTÁ ON !</h1>
         <form action="<?php $_SERVER['PHP_SELF'] ?>" method="post">
-            <input type="submit" name="logout" value="logout">
+            <input type="submit" name="logout" value="Sair da conta">
+
         </form>
         <?php 
             if(isset($_POST["logout"])){
                 session_destroy();
                 header("Location: index.php");
+                exit();
             }
         ?>
 
-        <form action= "<?php $_SERVER['PHP_SELF'] ?>" method="post">
-            <label for="question_1" class="question">1 - Qual NPC está relacionado as Daimons? </label> <br>
-            <input type="radio" name="resposta_1" id="resposta_1" class="answer" value="Senhor Zhenjun" >Senhor Zhenjun <br>
-            <input type="radio" name="resposta_1" id="resposta_1" class="answer" value="Emissário Elemental">Emissário Elemental <br>
-            <input type="radio" name="resposta_1" id="resposta_1" class="answer" value="Deus Antigo">Deus Antigo <br>
+        <div class="quiz-container">
+            <form action= "<?php $_SERVER['PHP_SELF'] ?>" method="post">
+                <label for="question_1" class="question">1 - Qual o maior orgão do corpo humano ? </label> <br>
+                <input type="radio" name="resposta_1" id="resposta_1" class="answer" value="Pele" >Pele<br>
+                <input type="radio" name="resposta_1" id="resposta_1" class="answer" value="Coração">Coração <br>
+                <input type="radio" name="resposta_1" id="resposta_1" class="answer" value="Fígado">Fígado <br>
 
-            <label for="question_2" class="question">2 - Que NPC é necessário quando os personagens querem casar?</label><br>
-            <input type="radio" name="resposta_2" id="resposta_2" class="answer" value="Casamenteiro Antonio">Casamenteiro Antonio<br>
-            <input type="radio" name="resposta_2" id="resposta_2" class="answer" value="Cupido">Cupido <br>
-            <input type="radio" name="resposta_2" id="resposta_2" class="answer" value="Ancião da Cidade do Dragão">Ancião da Cidade do Dragão <br>
-            
-            <input type="submit" name="EnviarRespostas" value="Enviar respostas">
-        </form>
+                <label for="question_2" class="question">2 - Qual o único orgão do corpo humano que não aumenta de tamanho desde o nascimento ?</label><br>
+                <input type="radio" name="resposta_2" id="resposta_2" class="answer" value="Rim">Rim<br>
+                <input type="radio" name="resposta_2" id="resposta_2" class="answer" value="Olhos">Olhos <br>
+                <input type="radio" name="resposta_2" id="resposta_2" class="answer" value="Tireoide">Tireoide <br>
+
+                <label for="question_3" class="question">3 - Qual o nome do hormônio responsável pelos sentimentos de recompensa e motivação, conhecido como hormônio do prazer ?</label><br>
+                <input type="radio" name="resposta_3" id="resposta_3" class="answer" value="Testosterona">Testosterona<br>
+                <input type="radio" name="resposta_3" id="resposta_3" class="answer" value="Melatonina">Melatonina<br>
+                <input type="radio" name="resposta_3" id="resposta_3" class="answer" value="Dopamina">Dopamina <br>
+
+                <label for="question_4" class="question">4 - Qual o nome do hormônio responsável pela resposta inflamatória do corpo, equilibrar o sistema imunológico e controlar a pressão arterial, também conhecido como hormônio do estresse ?</label><br>
+                <input type="radio" name="resposta_4" id="resposta_4" class="answer" value="Progesterona">Progesterona<br>
+                <input type="radio" name="resposta_4" id="resposta_4" class="answer" value="Cortisol">Cortisol <br>
+                <input type="radio" name="resposta_4" id="resposta_4" class="answer" value="Ocitocina">Ocitocina <br>
+
+                <label for="question_5" class="question">5 - Como ocorre o processo de crescimento dos músculos ? </label> <br>
+                <input type="radio" name="resposta_5" id="resposta_5" class="answer" value="Primeiro ocorre pequenas lesões nas fibras musculares causadas por esforço físico e estresse mecânico que atráves de descanso são reparadas, ficando maiores e mais fortes" >Primeiro ocorre pequenas lesões nas fibras musculares causadas por esforço físico e estresse mecânico que atráves de descanso são reparadas, ficando maiores e mais fortes<br>
+                <input type="radio" name="resposta_5" id="resposta_5" class="answer" value="O processo ocorre com uso de medicamentos, alto sedentarismo e boa qualidade de sono">O processo ocorre com uso de medicamentos, alto sedentarismo e boa qualidade de sono <br>
+                <input type="radio" name="resposta_5" id="resposta_5" class="answer" value="O aumento muscular ocorre com a ingestão de grandes quantidades de gordura,unido a nulo estresse mecânico e esforço físico">O aumento muscular ocorre com a ingestão de grandes quantidades de gordura,unido a nulo estresse mecânico e esforço físico <br>
+
+
+                <label for="question_6" class="question">6 - O que descreve melhor a sensação de vício no cerébro ?</label><br>
+                <input type="radio" name="resposta_6" id="resposta_6" class="answer" value="Redução da qualidade de sono, frequência aumentada de urinar e aumento da líbido">Redução da qualidade de sono, frequência aumentada de urinar e aumento da líbido<br>
+                <input type="radio" name="resposta_6" id="resposta_6" class="answer" value="A falta de vontade de ingerir alimentos com açucar somado a pouca líbido e aumento da sensação de fome">A falta de vontade de ingerir alimentos com açucar somado a pouca líbido e aumento da sensação de fome<br>
+                <input type="radio" name="resposta_6" id="resposta_6" class="answer" value="É o achatamento de atividades que são prazerosas, devido ao uso constante de alguma atividade ou substância que gere muito prazer, o cerébro fica dependente daquilo, com o tempo, a quantidade anterior, não é suficiente mais, por isso, é necessário aumentar a dosagem para receber a mesma quantidade de prazer que anteriormente recebia com uma quantidade menor">É o achatamento de atividades que são prazerosas, devido ao uso constante de alguma atividade ou substância que gere muito prazer, o cerébro fica dependente daquilo, com o tempo, a quantidade anterior, não é suficiente mais, por isso, é necessário aumentar a dosagem para receber a mesma quantidade de prazer que anteriormente recebia com uma quantidade menor<br>
+                
+                <input type="submit" name="EnviarRespostas" value="Enviar respostas">
+                <input type="submit" name="reset" value="Refazer teste" onclick="return confirm('Tem certeza que deseja apagar todas as respostas e recomeçar?')">
+            </form>
+        </div>
+
     </main>
 
     <?php 
     //A FAZER
     //1)   Preciso colocar as respostas que foram marcadas e estão no banco de dados
-    //como a única respostas que vão mostrar no site
+    //como a única respostas que vão mostrar no site FEITO
     //2)   Preciso criar um botão para "resetar" o questionário e deletar as informações
-    //salvas no banco de dados.
-    //3)   Preciso colocar todas as perguntas corretas dentro do banco de dados
+    //salvas no banco de dados. FEITO
+    //3)   Preciso colocar todas as perguntas corretas dentro do banco de dados FEITO
     //4)   Preciso atualizar as respostas respondidas acima com variáveis
-    //5)   Preciso deixar esse código mais bonito, organizado e comentado.
+    //5)   Preciso deixar esse código mais bonito, organizado e comentado. FEITO 
+    //6)   Tem um problema que, sempre que deleto as respostas da table answers, quando atualizo a página do site, ele ainda envia as mesmas respostas salvas anteriormente, ao invés de resetar todas as respostas, que seria o correto. RESOLVIDO
+    //7)   Criar um botão de alerta se o user não responder todas as perguntas.     FEITO
+    //8) 
         // Run this once to populate questions
-        $questions = [
-            [
-                'question_text' => 'Qual NPC está relacionado as Daimons?',
-                'correct_answer' => 'Emissário Elemental'
-            ],
-            [
-                'question_text' => 'Que NPC é necessário quando os personagens querem casar?',
-                'correct_answer' => 'Cupido'
-            ]
-        ];
+        // $questions = [
+        //     [
+        //         'question_text' => 'Qual o maior orgão do corpo humano ?',
+        //         'correct_answer' => 'Pele'
+        //     ],
+        //     [
+        //         'question_text' => 'Qual o único orgão do corpo humano que não aumenta de tamanho desde o nascimento ?',
+        //         'correct_answer' => 'Olhos'
+        //     ],
+        //     [
+        //         'question_text' => 'Qual o nome do hormônio responsável pelos sentimentos de recompensa e motivação, conhecido como hormônio do prazer ?',
+        //         'correct_answer' => 'Dopamina'
+        //     ],
+        //     [
+        //         'question_text' => 'Qual o nome do hormônio responsável pela resposta inflamatória do corpo, equilibrar o sistema imunológico e controlar a pressão arterial, também conhecido como hormônio do estresse ? ',
+        //         'correct_answer' => 'Cortisol'
+        //     ],
+        //     [
+        //         'question_text' => 'Como ocorre o processo de crescimento dos músculos ?',
+        //         'correct_answer' => 'Primeiro ocorre pequenas lesões nas fibras musculares causadas por esforço físico e estresse mecânico que atráves de descanso  são reparadas, ficando maiores e mais fortes'
+        //     ],
+        //     [
+        //         'question_text' => 'O que descreve melhor a sensação de vício no cerébro ?',
+        //         'correct_answer' => 'É o achatamento de atividades que são prazerosas, devido ao uso constante de alguma atividade ou substância que gere muito prazer, o cerébro fica dependente daquilo, com o tempo, a quantidade anterior, não é suficiente mais, por isso, é necessário aumentar a dosagem para receber a mesma quantidade de prazer que anteriormente recebia com uma quantidade menor'
+        //     ]
+        // ];
 
-        // Insert questions only if they don't exist
-
+        // // Insert questions only if they don't exist
         // foreach ($questions as $question) {
         //     $stmt = $connection->prepare("INSERT INTO questions (question_text, correct_answer) VALUES (?, ?)");
         //     $stmt->bind_param("ss", $question['question_text'], $question['correct_answer']);
@@ -135,96 +185,130 @@
         // }
 
         $correctAnswers = [
-            'resposta_1' => 'Emissário Elemental',
-            'resposta_2' => 'Cupido'
+            'resposta_1' => 'Pele',
+            'resposta_2' => 'Olhos',
+            'resposta_3' => 'Dopamina',
+            'resposta_4' => 'Cortisol',
+            'resposta_5' => 'Primeiro ocorre pequenas lesões nas fibras musculares causadas por esforço físico e estresse mecânico que atráves de descanso são reparadas, ficando maiores e mais fortes',
+            'resposta_6' => 'É o achatamento de atividades que são prazerosas, devido ao uso constante de alguma atividade ou substância que gere muito prazer, o cerébro fica dependente daquilo, com o tempo, a quantidade anterior, não é suficiente mais, por isso, é necessário aumentar a dosagem para receber a mesma quantidade de prazer que anteriormente recebia com uma quantidade menor'
         ];
         
         $results = []; // Array para verificar se a resposta está correta usando 1 para true com if
         $userAnswers = [];
+        // Get user ID from session
+        $userId = $user['id'];
     
         if (isset($_POST["EnviarRespostas"])){
 
-            // Get user ID from session
-            $userId = $user['id']; // Assuming your users table has an 'id' column
-            
             $allAnswered = true;
             $score = 0;
-            
-            foreach($correctAnswers as $answer => $correctAnswer){
-                $questionId = substr($answer, -1); // Gets question number (1, 2)
+            $respondido = 0;
 
-                if (isset($_POST[$answer])) {
-                    $userAnswer = $_POST[$answer];
-                    $userAnswers[$answer] = $userAnswer;
+            // First, verify all questions are answered
+            foreach($correctAnswers as $answer => $correctAnswer) {
+                if (!isset($_POST[$answer])) {
+                    $allAnswered = false;
+                    break;
+                } else{
+                    $respondido ++;
+                }
+            }
+
+            // Se todas as perguntas forem respondidas, então procede para as query's do BD
+            if ($allAnswered){
+                foreach($correctAnswers as $answer => $correctAnswer){
+                    $questionId = substr($answer, -1); // Gets question number (1, 2)
+                    $userAnswer = null;
+                    
+                    //Se o user clicar em uma resposta, pega a resposta atual.
+                    if (isset($_POST[$answer])) {
+                        $userAnswer = $_POST[$answer];
+
+                    } else {
+                        $allAnswered = false;
+                        echo '<script>alert("Por favor, responda TODAS as perguntas antes de enviar!");</script>';
+                        break;
+                    }
+                    
+                    //Se a resposta do user for a correta, recebe 1.
                     $isCorrect = ($userAnswer === $correctAnswer);
-                    $results[$answer] = ($userAnswer === $correctAnswer);
-
-                    // First check if answer already exists
-                    $checkStmt = $connection->prepare("SELECT id FROM answers WHERE user_id = ? AND question_id = ?");
-                    $checkStmt->bind_param("ii", $userId, $questionId);
-                    $checkStmt->execute();
-                    $checkStmt->store_result();
-
-                    //If tiver respostas vazias, inseri a resposta do usuário no banco
-                    if ($checkStmt->num_rows === 0){
-                        $stmt = $connection->prepare("INSERT INTO answers (user_id, question_id, user_answer, is_correct) VALUES (?, ?, ?, ?)");
-
-                        $stmt->bind_param("iisi", $userId, $questionId, $userAnswer, $isCorrect);
-                        $stmt->execute();
-
-                        if (!$stmt) {
-                            die("Prepare failed: " . $connection->error);
-                        }
-                        if (!$stmt->bind_param(...)) {
-                            die("Binding failed: " . $stmt->error);
-                        }
-                        if (!$stmt->execute()) {
-                            die("Execute failed: " . $stmt->error);
-                        }
+                    
+                    // Seleciona as IDs e User_answers para ver se existem no BD. 
+                    $sqlUserAnswersAndID = "SELECT id, user_answer FROM answers WHERE user_id = ? AND question_id = ?";
+                    $stmt2 = mysqli_prepare($connection, $sqlUserAnswersAndID);
+                    mysqli_stmt_bind_param($stmt2, "ii" ,$userId, $questionId);
+                    mysqli_execute($stmt2);
+                    $respostasUser = mysqli_stmt_get_result($stmt2);
+                    
+    
+                    // Seleciona as IDs e Correct_answers do BD para correção.
+                    $sqlCorrectAnswers = "SELECT id, correct_answer FROM questions WHERE id = ?";
+                    $stmt3 = mysqli_prepare($connection, $sqlCorrectAnswers);
+                    mysqli_stmt_bind_param($stmt3, "i", $questionId);
+                    mysqli_execute($stmt3);
+                    $respostasCorretas = mysqli_stmt_get_result($stmt3); 
+    
+    
+                    //Se não tiver respostas no BD, inseri a resposta do usuário no BD
+                    if (mysqli_num_rows($respostasUser) === 0 && $allAnswered === true) {
+                        $sqlInsertAnswers = "INSERT INTO answers (user_id, question_id, user_answer, is_correct) VALUES (?, ?, ?, ?)";
+                        $stmt4 = mysqli_prepare($connection, $sqlInsertAnswers);
+    
+                        mysqli_stmt_bind_param($stmt4, "iisi", $userId, $questionId, $userAnswer, $isCorrect);
+                        mysqli_execute($stmt4);
                     }
 
+
+                    // Se tiver respostas no BD, pega as respostas e compara com elas.
+                    else if (mysqli_num_rows($respostasUser) > 0) {
+                        $respostaUserBD = mysqli_fetch_assoc($respostasUser);
+                        $respostaCorretaBD = mysqli_fetch_assoc($respostasCorretas);
+    
+                        if ($respostaUserBD['user_answer'] === $respostaCorretaBD['correct_answer']){
+                            echo" <br>Acertou!";
+                        } else{
+                            echo "<br>Errou!";
+                        }
+                    }
+    
                     if ($isCorrect) {
                         $score++;
                     }
 
-                } else {
-                    $userAnswers[$answer] = null;
-                    $results[$answer] = false;
-                    $allAnswered = false;
+                    // After processing all answers, store in session
+                    $_SESSION['current_score'] = $score;
+                    $_SESSION['current_answered'] = $respondido;
+    
+                    // header("Location: ".$_SERVER['PHP_SELF'] . "?submitted=true");
+                    // exit();
                 }
 
-                // Redirect immediately after processing
-                // header("Location: ".$_SERVER['PHP_SELF'] . "?submitted=true");
-                // exit();
-
-                if ($allAnswered){
-
-                    // Get all questions and answers for display
-                    $questionsResult = $connection->query("SELECT * FROM questions ORDER BY id");
-                    $answersResult = $connection->query("SELECT * FROM answers 
-                                                    WHERE user_id = $userId 
-                                                    ORDER BY question_id DESC 
-                                                    LIMIT " . count($correctAnswers));
-                    
-                    echo "<div class='results-container'>";
-                    echo "<h2>Seu Resultado: $score/" . count($correctAnswers) . "</h2>";
-                    echo "</div>";
-                } elseif (isset($_POST["EnviarRespostas"])) {
-                    echo "<p>Por favor, responda todas as perguntas antes de enviar.</p>";
-                }     
+            } else {
+                // Show error message if not all questions answered
+                echo '<script>alert("Por favor, responda TODAS as perguntas antes de enviar!");</script>';
             }
 
-        }else{
-            foreach( $correctAnswers as $answer => $correctAnswer){
-                echo "<p>Pergunta " . substr($answer, -1) . ": Nenhuma resposta selecionada.</p>";
-            }
+            // Show success message
+            echo "<p>Respostas enviadas com sucesso! Você acertou $score de " . count($correctAnswers) . " perguntas.</p>";
         }
 
-        // Calculate score
-        $score = count(array_filter($results));
-        $total = count($correctAnswers);
-        echo "<p>Você acertou $score de $total perguntas.</p>";
+        // Deleta as respostas que ja estão salvas no BD
+        if(isset($_POST["reset"])){
 
+            $sqlDelete = "DELETE FROM answers WHERE user_id = ? ";
+            $stmtDelete = mysqli_prepare($connection, $sqlDelete);
+
+            mysqli_stmt_bind_param($stmtDelete, "i" ,$userId);
+            mysqli_execute($stmtDelete);
+
+            if (mysqli_execute($stmtDelete)) {
+                echo '<script>alert("Respostas apagadas com sucesso! Você pode recomeçar o teste.");</script>';
+                // Optional: Redirect to clear form
+                echo '<script>window.location.href = "'.$_SERVER['PHP_SELF'].'";</script>';
+            } else {
+                echo '<script>alert("Erro ao apagar respostas: '.$connection->error.'");</script>';
+            }
+        }
     ?>
 </body>
 </html>

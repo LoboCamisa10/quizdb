@@ -5,13 +5,20 @@
     box-sizing: border-box;
 }
 
-body{
+body {
     background: #1690a7;
     min-height: 200vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* min-height: 100vh; */
+    margin: 0;
+    font-family: Arial, sans-serif;
+    /* background-color: #f5f5f5; */
 }
 
-header{
-    background: #fff;
+header {
+    background: #ffffff;
     position: fixed;
     top: 0vh;
     left: 0vh;
@@ -23,19 +30,19 @@ header{
     padding: 10px 100px;
 }
 
-header div li{
+header div li {
     list-style-type: none;
     padding: 1rem;
 }
 
-header div img{
+header div img {
     position: relative;
     transition: 0.6s;
     border-radius: 10px;
     margin-left: 2rem;
 }
 
-header ul{
+header ul {
     position: relative;
     display: flex;
     justify-content: center;
@@ -88,11 +95,73 @@ header ul{
     margin-bottom: 5px;
 }
 
-main{
+main {
     position: relative;
     top: 30vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.quiz-container {
+    width: 80%;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    /* background-color: #ffffff; */
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.question {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 1.5rem 0 0.5rem 0;
+    color: #333;
+}
+
+/* Answer options styling */
+.answer {
+    margin: 0.5rem 0;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+/* Submit buttons styling */
+input[type="submit"] {
+    margin-top: 2rem;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Reset button specific styling */
+input[name="reset"] {
+    background-color: #f44336;
+    margin-left: 1rem;
+}
+
+input[name="reset"]:hover {
+    background-color: #d32f2f;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .quiz-container {
+        width: 95%;
+        padding: 1rem;
+    }
 }
