@@ -90,17 +90,7 @@
     </header>
 
     <main>
-        <div>
-            Tarefas para serem feitas: <br>
-            - Criar uma barra de navegação com imagem, nome, idade e as perguntas respondidas.  FEITO ✅<br>
-            - Criar as abas de perguntas, e colocar duas perguntas lá, com form e radio. FEITO ✅ <br>
-            - Fazer os testes no banco de dados, como tentar armazenar as respostas e fazer a correção dessas duas perguntas. FEITO ✅ <br>
-            - Colocar um sistema para atualizar a foto do Perfil FEITO ✅<br>
-            - Colocar as respostas em verde ou vermelho dependendo se a pergunta estiver certa ou errada <br>
-            - Colocar o botão de logout dentro da barra de navegação FEITO ✅
-        </div>
                 
-
         <div class="quiz-container">
             <form action= "<?php $_SERVER['PHP_SELF'] ?>" method="post">
                 <label for="question_1" class="question">1 - Qual o maior orgão do corpo humano ? </label> <br>
@@ -291,10 +281,7 @@
                 echo '<script>alert("Por favor, responda TODAS as perguntas antes de enviar!");</script>';
             }
 
-            // Show success message
-            echo "<p>Respostas enviadas com sucesso! Você acertou $score de " . count($correctAnswers) . " perguntas.</p>";
-
-            // Force redirect to refresh the page
+            // Forçar redirecionamento para atualizar a página
             echo '<script>window.location.href="'.$_SERVER['PHP_SELF'].'";</script>';
             exit();
         }
@@ -319,7 +306,7 @@
             $_SESSION['current_score'] = 0;
             $_SESSION['current_answered'] = 0;
 
-            // // Force redirect to refresh the page
+            // Forçar redirecionamento para atualizar a página
             echo '<script>window.location.href="'.$_SERVER['PHP_SELF'].'";</script>';
             exit();
         }

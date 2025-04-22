@@ -104,8 +104,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 50px; /* Adjust this value based on your header height */
-
+    margin-top: 10px; /* Adjust this value based on your header height */
 }
 
 .quiz-container {
