@@ -28,6 +28,7 @@ header {
     align-items: center;
     transition: 0.6s;
     padding: 10px 100px;
+    z-index: 1;
 }
 
 header div li {
@@ -77,23 +78,24 @@ header ul {
     right: 40vh;
     width: 80vh;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
 }
 
 .counter-number {
     font-size: 2rem;
-    font-weight: bold;
     color: #000000;
+    margin: 1rem;
 }
 
 .counter-label {
-    font-size: 1.3rem;
+    font-size: 2rem;
     color: #000000;
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
 
 main {
     position: relative;
@@ -102,6 +104,8 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 50px; /* Adjust this value based on your header height */
+
 }
 
 .quiz-container {
@@ -109,9 +113,23 @@ main {
     max-width: 800px;
     margin: 2rem auto;
     padding: 2rem;
-    /* background-color: #ffffff; */
+    background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.correct-answer {
+    background-color: #d4edda;
+    border: 2px solid #28a745;
+    padding: 4px;
+    border-radius: 5px;
+}
+
+.wrong-answer {
+    background-color: #f8d7da;
+    border: 2px solid #dc3545;
+    padding: 4px;
+    border-radius: 5px;
 }
 
 .question {
@@ -135,8 +153,8 @@ input[type="radio"] {
 input[type="submit"] {
     margin-top: 2rem;
     padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
+    background-color: #1f6d21;
+    color: #ffffff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -145,7 +163,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: #45a049;
+    background-color: #45a0499a;
 }
 
 /* Reset button specific styling */
@@ -155,7 +173,7 @@ input[name="reset"] {
 }
 
 input[name="reset"]:hover {
-    background-color: #d32f2f;
+    background-color: #d3342f93;
 }
 
 /* Responsive adjustments */
